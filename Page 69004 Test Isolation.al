@@ -132,11 +132,8 @@ page 69004 "Test Isolation"
         if not WrongDate then
             PostingDate := WorkDate();
         CreateJournalWithDate(PostingDate, ResJnlLine);
-        TestPostAnything.SetEnvirontToPost(Codeunit::"Res. Jnl.-Post Line", ResJnlLine);
-        CreateSuite(CALTestLine);
-        Codeunit.Run(Codeunit::"CAL Test Runner", CALTestLine);
-        if GetLastErrorText <> '' then
-            Error('');
+        TestPostAnything.RunTheTest(Codeunit::"Res. Jnl.-Post Line", ResJnlLine);
+        Codeunit.Run(Codeunit::"Res. Jnl.-Post Line", ResJnlLine);
         if ResLedgerEntry.FindLast then
             Message(ResLedgerEntry."Document No.")
         else
@@ -172,29 +169,9 @@ page 69004 "Test Isolation"
         end;
     end;
 
-    local procedure CreateSuite(var CALTestLine: Record "CAL Test Line")
-    var
-        CALTestSuite: Record "CAL Test Suite";
-    begin
-        with CALTestSuite do begin
-            Name := SuiteName;
-            Description := SuiteName;
-            if Insert() then;
-        end;
-        with CALTestLine do begin
-            "Test Suite" := CALTestSuite.Name;
-            "Line No." := 10000;
-            if not Insert() then;
-            "Line Type" := "Line Type"::Codeunit;
-            "Test Codeunit" := Codeunit::"Test Post Anything";
-            Run := true;
-            Modify();
-            SetRecFilter();
-        end;
-    end;
 
     var
         CALTestRunner: Codeunit "CAL Test Runner";
         CALTestRunnerPublisher: Codeunit "CAL Test Runner Publisher";
-        SuiteName: Label 'POSTANY';
+
 }
