@@ -1,2 +1,2 @@
 # AL-Test-Isolation
-Demo for my next Post about Business Central and AL. More info in a few days.
+Code related with this post https://community.dynamics.com/nav/b/conceptsindailynavisionwork/posts/hacking-test-isolation
